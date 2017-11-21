@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<!--<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>-->
+		<style type="text/css">
+		.width5 {
+			width: 50px;
+		}
+		
+		.width7 {
+			width: 70px;
+		}  
+		/*套在Select外层，用于隐藏Select框*/
+		.DivSelect {
+			float: left;
+			position: relative;
+			background-color: transparent;
+			height: 17px;
+			overflow: hidden;
+			/*隐藏了小三角，宽度为比select宽度少20px*/
+			border-width: 0px;
+			border-top-style: none;
+			border-right-style: none;
+			border-left-style: none;
+			border-bottom-style: none;
+		}
+		/*设置Select样式*/
+		.SelectList{
+		    position: relative;
+		    background-color: transparent;
+		    TOP:-2px;
+		    left:-2px;
+		    border-width: 0px;
+		    border-top-style: none; 
+		    border-right-style: none; 
+		    border-left-style: none; 
+		    border-bottom-style: none;
+		    display:block;
+		    height: 20px;
+		    overflow:hidden;
+		}
+		</style>
+	</head>
+	<body>
+		<div class="DivSelect width5">
+            <select  class="SelectList width7">
+                <option>双铜纸</option>
+                <option>双胶纸</option>
+            </select>
+        </div>
+		 <script type="text/javascript">
+		        $(document).ready(function(){
+			        $("p").add( "div" ).addClass( "widget" );
+					var pdiv = $( "p" ).add( "div" );
+		        })
+		    </script>
+	</body>
+</html>

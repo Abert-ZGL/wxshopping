@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>品纯酒社商城后台管理系统登录</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <!-- Bootstrap -->
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
+    <link href="assets/styles.css" rel="stylesheet" media="screen">
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--<script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>-->
+    <style type="text/css">
+    	.userError,.passwordError{
+    		color: red;
+    		display: none;
+    	}
+    </style>
+  </head>
+  <body id="login">
+    <div class="container">
+      <div class="form-signin">
+        <h2 class="form-signin-heading">登录<img style="display: inline-block;width: 70px;" src="images/logo.jpg"/></h2>
+        <input type="text" class="input-block-level" id="userName" required="required" placeholder="账号">
+        <div class="userError">
+        	用户名不正确
+        </div>
+        <input type="password" class="input-block-level" id="passWord" placeholder="密码">
+        <div class="passwordError">
+        	密码不正确
+        </div>
+        <button class="btn btn-large btn-primary" id="submit">登录</button>
+      </div>
+    </div> <!-- /container -->
+    <script src="vendors/jquery-1.9.1.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="publicjs/md5.min.js"></script>
+  </body>
+  <script type="text/javascript">
+    //name:cookie名称  value:cookie值   
+    function SetCookie(name, value) {  
+    	  var Days = 30;
+        var exp = new Date();  
+        exp.setTime(exp.getTime() + 4*60000*60);//过期时间4小时  
+        document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString();  
+    }  
+   
+    
+    $(function(){
+//  	var ip = window.location.href.split(':')[1].split("//").join("");
+//  	var currentUrl = 'http://120.77.215.74:80/api/auth/login';
+//		var hash = md5("value");  // "2063c1608d6e0baf80249c42e2be5804"
+      function getToken (username, password) {
+      	var token,refreshToken;
+      	$.ajax({
+      		type:"post",
+      		headers:{
+					    "content-type": "application/json"
+					},
+      		url:"http://120.77.215.74:80/api/auth/login",
+      		data:JSON.stringify({"username": "svlada@gmail.com","password": "e10adc3949ba59abbe56e057f20f883e"}),
+      		async:false,
+      		success:function(response) {
+      			token = response.token;
+      			refreshToken = response.refreshToken;
+		    		SetCookie('loginCookie', token);
+		    		window.open("http://localhost:8001/admin/index", "_self"); 
+//		    		window.open("http://www.dsunyun.com:81/admin/index", "_self"); 
+      		}
+      	});
+      };
+    	$('#submit').click(function(){
+    		var username = $('#userName').val();
+    		var password = $('#passWord').val();
+    		if(username === 'admin'){
+    			$('.userError').hide();
+    		}else{
+    			$('.userError').show();
+    			return false;
+    		};
+    		if(password === '123456'){
+    			$('.passwordError').hide();
+    		}else{
+    			$('.passwordError').show();
+    			return false;
+    		}
+    		var token = getToken (username, password);
+    	});
+    	
+    });
+  </script>
+</html>
+    

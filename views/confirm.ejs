@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+   <meta charset="utf-8">
+   <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+   <meta content="yes" name="apple-mobile-web-app-capable">
+   <meta content="black" name="apple-mobile-web-app-status-bar-style">
+   <meta content="telephone=no" name="format-detection">
+   <meta content="email=no" name="format-detection">
+   <title>结算</title>
+   <link rel="stylesheet" type="text/css" href="../css/public.css"/>
+   <link rel="stylesheet" type="text/css" href="../css/aui.css"/>
+   <script src="../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+   <style type="text/css">
+   .header {
+			    position: fixed;
+			    top: 0;
+			    left: 0;
+			    z-index: 2;
+			    width: 100%;
+			}
+			.header-background {
+			    background: #EFEFF4;
+			    position: absolute;
+			    top: 0;
+			    right: 0;
+			    bottom: 0;
+			    left: 0;
+			}
+			.header-background:before {
+			    content: " ";
+			    position: absolute;
+			    left: 0;
+			    bottom: -0.03rem;
+			    right: 0;
+			    height: 1px;
+			    border-bottom: 1px solid rgba(177, 177, 177, 0.95);
+			    color: rgba(177, 177, 177, 0.95);
+			    -webkit-transform-origin: 0 100%;
+			    transform-origin: 0 100%;
+			    -webkit-transform: scaleY(0.501);
+			    transform: scaleY(0.501);
+			}
+			*, *:after, *::before {
+			    -webkit-box-sizing: border-box;
+			    -moz-box-sizing: border-box;
+			    box-sizing: border-box;
+			}
+			*, *:before, *:after {
+			    -webkit-box-sizing: border-box;
+			    box-sizing: border-box;
+			}
+			.toolbar {
+			    display: -webkit-flex;
+			    display: flex;
+			    -webkit-flex-direction: row;
+			    flex-direction: row;
+			    -webkit-justify-content: space-between;
+			    justify-content: space-between;
+			    -webkit-align-items: center;
+			    align-items: center;
+			    -webkit-transform: translateZ(0);
+			    transform: translateZ(0);
+			    width: 100%;
+			    padding: 6px;
+			    min-height: 44px;
+			}
+			.header .back-button {
+			    display: -webkit-box;
+			    display: -webkit-flex;
+			    display: flex;
+			    -webkit-box-align: center;
+			    -webkit-align-items: center;
+			    align-items: center;
+			    -webkit-justify-content: center;
+			    justify-content: center;
+			}
+			.header .bar-button {
+			    display: -webkit-box;
+			    display: -webkit-flex;
+			    display: flex;
+			    -webkit-box-align: center;
+			    -webkit-align-items: center;
+			    align-items: center;
+			    -webkit-justify-content: center;
+			    justify-content: center;
+			    position: relative;
+			    z-index: 1;
+			    display: block;
+			    width: 56px;
+			    height: 32px;
+			    line-height: 32px;
+			    font-size: 17px;
+			    border: none;
+			    box-shadow: none;
+			    background: none;
+			}
+			.header .header-title {
+			    display: -webkit-flex;
+			    display: flex;
+			    -webkit-flex: 1;
+			    flex: 1;
+			    order: 4;
+			    position: absolute;
+			    top: 0;
+			    left: 0;
+			    width: 100%;
+			    height: 44px;
+			    -webkit-align-items: center;
+			    align-items: center;
+			    padding: 0 80px;
+			    text-align: center;
+			    font-size: 17px;
+			    font-weight: 500;
+			    -webkit-transform: translateZ(0);
+			    transform: translateZ(0);
+			    color: #333333;
+			}
+			.header .title {
+			    display: block;
+			    overflow: hidden;
+			    width: 100%;
+			    white-space: nowrap;
+			    text-overflow: ellipsis;
+			    font-weight: normal;
+			}
+			.header .icon-back {
+			    margin: 0 20px 0 0;
+			    width: 32px;
+			    height: 32px;
+			    background-position: left center;
+			}
+			.icon-back {
+			    background-image: url(../images/myself/rightArrow.png);
+			    margin: 0 20px 0 0;
+			    width: 25px;
+			    height: 25px;
+			    background-position: left center;
+			    background-size: 25px;
+			}
+			.icon {
+			    display: block;
+			    margin: 0 auto;
+			    width: 25px;
+			    height: 25px;
+			    background-position: center center;
+			    background-repeat: no-repeat;
+			    -webkit-background-size: 32px;
+			    background-size: 32px;
+			}
+			.settlement {
+			    width: 100%;
+			    height: 50px;
+			    position: fixed;
+			    z-index: 99;
+			    bottom: 0px;
+			    left: 0px;
+			    background-color: #f6f6f6;
+			}
+	        .t-line:before {
+			    content: "";
+			    position: absolute;
+			    left: 0;
+			    top: 0;
+			    right: 0;
+			    height: 1px;
+			    border-top: 1px solid rgba(207, 207, 207, 0.95);
+			    color: rgba(207, 207, 207, 0.95);
+			    -webkit-transform-origin: 0 0;
+			    transform-origin: 0 0;
+			    -webkit-transform: scaleY(0.501);
+			    transform: scaleY(0.501);
+			}
+			.settlement_left {
+			    width: 50%;
+			    height: 50px;
+			    line-height: 20px;
+			    overflow: hidden;
+			    float: left;
+			    font-size: 12px;
+			    color: #9b9b9c;
+			    padding: 5px 0px;
+			}
+			.settlement_left .zongji {
+			    margin-left: 10px;
+			    font-size: 18px;
+			    color: #030000;
+			}
+			.settlement_left .money {
+			    font-size: 18px;
+			    color: #ff7800;
+			}
+			address, cite, dfn, em, var {
+			    font-style: normal;
+			}
+			.settlement_right {
+			    width: 50%;
+			    overflow: hidden;
+			    float: right;
+			}
+			.settlement_right a {
+			    text-align: center;
+			    width: 80%;
+			    height: 50px;
+			    line-height: 50px;
+			    font-size: 16px;
+			    float: right;
+			    border: 0px;
+			    border-radius: 0;
+			    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #feab47), color-stop(1, #ff5200));
+			    color: #FFF;
+			}
+			a{
+			    text-decoration: none;
+			    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+			    color: #646464;
+			}
+			ul{
+				list-style: none;
+				padding: 0;
+			}
+			li {
+			    display: list-item;
+			    text-align: -webkit-match-parent;
+			}
+			ul, menu, dir {
+			    display: block;
+			    list-style-type: disc;
+			    -webkit-margin-before: 1em;
+			    -webkit-margin-after: 1em;
+			    -webkit-margin-start: 0px;
+			    -webkit-margin-end: 0px;
+			   /* -webkit-padding-start: 40px;*/
+			}
+			.aui-wei-cell ul li a {
+			    position: relative;
+			    display: -webkit-box;
+			    display: -webkit-flex;
+			    display: flex;
+			    -webkit-box-align: center;
+			    -webkit-align-items: center;
+			    align-items: center;
+			}
+			a {
+			    text-decoration: none;
+			    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+			    color: #646464;
+			}
+			.aui-cell-i {
+			    background-image: url(../images/confirm/location.png);
+			    width: 25px;
+			    height: 25px;
+			    background-repeat: no-repeat;
+			    background-size: 25px;
+			    display: inline-block;
+			}
+			.aui-add-cell {
+			    padding: 1px 20px;
+			    position: relative;
+			    display: -webkit-box;
+			    display: -webkit-flex;
+			    display: flex;
+			    -webkit-box-align: center;
+			    -webkit-align-items: center;
+			    align-items: center;
+			    font-size: 14px;
+			    padding-top: 10px;
+			}
+			.aui-add-fix {
+			    -webkit-box-flex: 1;
+			    -webkit-flex: 1;
+			    flex: 1;
+			}
+			.aui-add-title {
+			    padding: 1px 20px;
+			    font-size: 14px;
+			    padding-bottom: 5px;
+			}
+			.aui-s-border {
+			    height: 5px;
+			    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #ff5200), color-stop(1, #feab47));
+			}
+			address, cite, dfn, em, var {
+			    font-style: normal;
+			}
+			.main_con {
+			    width: 100%;
+			    overflow: hidden;
+			    margin-bottom: 50px;
+			}
+			.main_con_goods ul li {
+			    margin-bottom: 10px;
+			}
+			.main_con_goods ul li {
+			    background: #f5f5f5;
+			    padding: 10px 0;
+			    position: relative;
+			    display: -webkit-box;
+			    display: -webkit-flex;
+			    display: flex;
+			    -webkit-box-align: center;
+			    -webkit-align-items: center;
+			    align-items: center;
+			    width: auto;
+			    text-align: left;
+			}
+			.aui-crl {
+			    position: relative;
+			    display: -webkit-box;
+			    display: -webkit-flex;
+			    display: flex;
+			    -webkit-box-align: center;
+			    -webkit-align-items: center;
+			    align-items: center;
+			}
+			.main_con_goods ul li img {
+			    width: 100px;
+			    height: 100px;
+			    float: left;
+			}
+			.main_con_goods ul li div {
+			    float: right;
+			}
+			.main_con_goods ul li h2 {
+			    font-weight: normal;
+			    font-size: 14px;
+			    color: #666;
+			}
+			.main_con_goods ul li .aui-o {
+			    color: #999;
+			    font-size: 12px;
+			}
+			.main_con_goods ul li div .money {
+			    margin-top: 10px;
+			}
+			.aui-redd {
+			    color: #ff8746;
+			}	
+			.aui-list-cells {
+			    background-color: #FFFFFF;
+			    line-height: 1.41176471;
+			    font-size: 14px;
+			    overflow: hidden;
+			    position: relative;
+			}
+			.aui-list-cells a {
+			    padding: 14px 15px 14px 4px;
+			}
+			a:hover {
+			    text-decoration: none;
+			}
+			.aui-list-cell {
+			    padding: 10px 15px;
+			    position: relative;
+			    display: -webkit-box;
+			    display: -webkit-flex;
+			    display: flex;
+			    -webkit-box-align: center;
+			    -webkit-align-items: center;
+			    align-items: center;
+			}
+			a {
+			    text-decoration: none;
+			    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+			    color: #646464;
+			}
+			.aui-list-cell:before {
+			    content: "";
+			    position: absolute;
+			    left: 0;
+			    bottom: 0;
+			    right: 0;
+			    height: 1px;
+			    border-bottom: 1px solid #D9D9D9;
+			    color: #D9D9D9;
+			    -webkit-transform-origin: 0 100%;
+			    transform-origin: 0 100%;
+			    -webkit-transform: scaleY(0.5);
+			    transform: scaleY(0.5);
+			}
+			.aui-list-cells .aui-list-cell-cn {
+			    font-size: 14px;
+			    color: #666;
+			}
+			.aui-list-cell-cn {
+			    -webkit-box-flex: 1;
+			    -webkit-flex: 1;
+			    flex: 1;
+			    padding-left: 10px;
+			    font-size: 12px;
+			    color: #666;
+			}
+			.aui-list-cell-fr {
+			    text-align: right;
+			    color: #999999;
+			    padding-right: 13px;
+			    position: relative;
+			}
+			.aui-list-cell-fr:after {
+			    background-image: url(../images/confirm/rightarrow.png);
+			    background-position: center;
+			    background-repeat: no-repeat;
+			    background-size: 18px;
+			}
+			.aui-list-cell-fr:after {
+			    width: 18px;
+			    height: 18px;
+			    content: "";
+			    display: inline-block;
+			    position: relative;
+			    top: -8px;
+			    position: absolute;
+			    top: 50%;
+			    margin-top: -10px;
+			    right: -5px;
+			}
+   </style>
+</head>
+<body>
+	<div class="header">
+			<div class="header-background"></div>
+			<div class="toolbar statusbar-padding">
+				<button class="bar-button back-button" onclick="history.go(-1);" dwz-event-on-click="click">
+					<i class="icon icon-back"></i>
+				</button>
+				<!--<a class="bar-button" data-href="home.html?dwz_callback=home_render" target="navTab" rel="home"><i class="icon icon-back"></i></a>-->
+				<div class="header-title">
+					<div class="title">确认订单</div>
+				</div>
+			</div>
+	</div>
+	<div style="height:50px"></div>
+	<div class="aui-wei-cell">
+			<ul>
+				<li>
+					<a href="/add">
+						<div class="" style="padding-left:15px">
+							<i class="aui-cell-i"></i>
+						</div>
+						<div>
+							<div class="aui-add-cell"><span class="aui-add-fix">李明轩</span><span>18801066666</span></div>
+							<div class=" aui-add-title" style="padding-bottom:10px">北京市海淀区学院路51号学而国际大厦1层</div>
+						</div>
+					</a>
+				</li>
+			</ul>
+			<div class="aui-s-border" style="margin-bottom:10px"></div>
+	</div>
+	<div class="main_con" style="margin-bottom:0;">
+			<div class="main_con_goods">
+				<ul>
+					<li style="margin-bottom:0;">
+						<section class="aui-crl" style="padding-left:15px">
+							<img src="../images/b4.jpg">
+						</section>
+						<div style="width: 170px; padding-left: 10px;">
+							<h2>2017春装新款时尚女装宽松贴布开衫针织衫NG5836</h2>
+							<p class="aui-o">颜色分类:黑色,尺码:M</p>
+							<p class="money"><em class="aui-redd">90￥</em>
+								<em style="color:#999; font-size:14px">x2</em>
+							</p>
+						</div>
+					</li>
+				</ul>
+			</div>
+    </div>
+	<div class="aui-list-cells">
+			<a href="javascript:;" class="aui-list-cell">
+				<div class="aui-list-cell-cn">配送方式</div>
+				<div class="aui-list-cell-fr">包邮</div>
+			</a>
+			<a href="javascript:;" class="aui-list-cell">
+				<div class="aui-list-cell-cn">运费险</div>
+				<div class="aui-list-cell-fr">保险</div>
+			</a>
+			<a href="javascript:;" class="aui-list-cell">
+				<div class="aui-list-cell-cn">发票抬头</div>
+				<div class="aui-list-cell-fr">个人</div>
+			</a>
+	</div>
+	<div style="height:44px"></div>
+    <div class="settlement t-line">
+		<div class="settlement_left"><em class="zongji">总计：</em><em class="money">￥0</em><br>（共undefined件，不包含运费）</div>
+		<div class="settlement_right">
+			<a href="/confirm">提交订单</a>
+		</div>
+	</div>
+</body>
+</html>

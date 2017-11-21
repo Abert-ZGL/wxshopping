@@ -1,0 +1,95 @@
+.my-info {
+    position: relative;
+    overflow: hidden;
+}
+.my-info-background {
+    width: 100%;
+    min-height: 160px;
+    overflow: hidden;
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #feab47), color-stop(1, #ff5200));
+}
+.my-info .my-avatar {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 80px;
+    height: 80px;
+    margin: -70px 0 0 -40px;
+    border-radius: 50%;
+    border: solid 2px rgba(255, 255, 255, 0.7);
+}
+.my-info .name {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 200px;
+    height: 20px;
+    margin: 20px 0 0 -100px;
+    text-align: center;
+    color: #fff;
+}
+.my-info .my-vip {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 200px;
+    height: 24px;
+    line-height: 24px;
+    margin: 45px 0 0 -100px;
+    padding: 0 4px;
+    border-radius: 3px;
+    text-align: center;
+    font-size: 12px;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.aui-list-cells {
+    background-color: #FFFFFF;
+    line-height: 1.41176471;
+    font-size: 14px;
+    overflow: hidden;
+    position: relative;
+}
+.aui-list-cells a {
+    padding: 14px 15px 14px 4px;
+}
+
+.aui-list-cell {
+    padding: 10px 15px;
+    position: relative;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+}
+
+a {
+    text-decoration: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    color: #646464;
+}
+.aui-list-cell-fl {
+    width: 30px;
+    height: 30px;
+}
+.aui-list-cells .aui-list-cell-cn {
+    font-size: 14px;
+    color: #666;
+}
+.aui-list-cell-cn {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    flex: 1;
+    padding-left: 10px;
+    font-size: 12px;
+    color: #666;
+}
+.aui-list-cell-fr {
+    text-align: right;
+    color: #999999;
+    padding-right: 13px;
+    position: relative;
+}

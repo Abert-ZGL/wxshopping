@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+   <meta charset="utf-8">
+   <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+   <meta content="yes" name="apple-mobile-web-app-capable">
+   <meta content="black" name="apple-mobile-web-app-status-bar-style">
+   <meta content="telephone=no" name="format-detection">
+   <meta content="email=no" name="format-detection">
+   <title>购物车</title>
+   <link rel="stylesheet" type="text/css" href="../css/public.css"/>
+   <link rel="stylesheet" type="text/css" href="../css/aui.css"/>
+   <script src="../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+   <style type="text/css">
+			.header {
+			   	position: fixed;
+			   	top: 0;
+			   	left: 0;
+			   	z-index: 2;
+			   	width: 100%;
+			}
+			.header-background {
+			    background: #EFEFF4;
+			    position: absolute;
+			    top: 0;
+			    right: 0;
+			    bottom: 0;
+			    left: 0;
+			}
+			.header-background:before {
+			    content: "";
+			    position: absolute;
+			    left: 0;
+			    bottom: -0.03rem;
+			    right: 0;
+			    height: 1px;
+			    border-bottom: 1px solid rgba(177, 177, 177, 0.95);
+			    color: rgba(177, 177, 177, 0.95);
+			    -webkit-transform-origin: 0 100%;
+			    transform-origin: 0 100%;
+			    -webkit-transform: scaleY(0.501);
+			    transform: scaleY(0.501);
+			}
+			*, *:after, *::before {
+			    -webkit-box-sizing: border-box;
+			    -moz-box-sizing: border-box;
+			    box-sizing: border-box;
+			}
+			*, *:before, *:after {
+			    -webkit-box-sizing: border-box;
+			    box-sizing: border-box;
+			}
+			.toolbar {
+			    display: -webkit-flex;
+			    display: flex;
+			    -webkit-flex-direction: row;
+			    flex-direction: row;
+			    -webkit-justify-content: space-between;
+			    justify-content: space-between;
+			    -webkit-align-items: center;
+			    align-items: center;
+			    -webkit-transform: translateZ(0);
+			    transform: translateZ(0);
+			    width: 100%;
+			    padding: 6px;
+			    min-height: 44px;
+			}
+			.header .back-button {
+			    display: -webkit-box;
+			    display: -webkit-flex;
+			    display: flex;
+			    -webkit-box-align: center;
+			    -webkit-align-items: center;
+			    align-items: center;
+			    -webkit-justify-content: center;
+			    justify-content: center;
+			}
+			.header .bar-button {
+			    display: -webkit-box;
+			    display: -webkit-flex;
+			    display: flex;
+			    -webkit-box-align: center;
+			    -webkit-align-items: center;
+			    align-items: center;
+			    -webkit-justify-content: center;
+			    justify-content: center;
+			    position: relative;
+			    z-index: 1;
+			    display: block;
+			    width: 56px;
+			    height: 32px;
+			    line-height: 32px;
+			    font-size: 17px;
+			    border: none;
+			    box-shadow: none;
+			    background: none;
+			}
+			.header .header-title {
+			    display: -webkit-flex;
+			    display: flex;
+			    -webkit-flex: 1;
+			    flex: 1;
+			    order: 4;
+			    position: absolute;
+			    top: 0;
+			    left: 0;
+			    width: 100%;
+			    height: 44px;
+			    -webkit-align-items: center;
+			    align-items: center;
+			    padding: 0 80px;
+			    text-align: center;
+			    font-size: 17px;
+			    font-weight: 500;
+			    -webkit-transform: translateZ(0);
+			    transform: translateZ(0);
+			    color: #333333;
+			}
+			.header .title {
+			    display: block;
+			    overflow: hidden;
+			    width: 100%;
+			    white-space: nowrap;
+			    text-overflow: ellipsis;
+			    font-weight: normal;
+			}
+			.header .icon-back {
+			    margin: 0 20px 0 0;
+			    width: 32px;
+			    height: 32px;
+			    background-position: left center;
+			}
+			.icon-back {
+			    background-image: url(../images/myself/rightArrow.png);
+			    margin: 0 20px 0 0;
+			    width: 25px;
+			    height: 25px;
+			    background-position: left center;
+			    background-size: 25px;
+			}
+			.icon {
+			    display: block;
+			    margin: 0 auto;
+			    width: 25px;
+			    height: 25px;
+			    background-position: center center;
+			    background-repeat: no-repeat;
+			    -webkit-background-size: 32px;
+			    background-size: 32px;
+			}
+			
+			
+			.settlement {
+			    width: 100%;
+			    height: 50px;
+			    position: fixed;
+			    z-index: 99;
+			    bottom: 0px;
+			    left: 0px;
+			    background-color: #f6f6f6;
+			}
+	        .t-line:before {
+			    content: " ";
+			    position: absolute;
+			    left: 0;
+			    top: 0;
+			    right: 0;
+			    height: 1px;
+			    border-top: 1px solid rgba(207, 207, 207, 0.95);
+			    color: rgba(207, 207, 207, 0.95);
+			    -webkit-transform-origin: 0 0;
+			    transform-origin: 0 0;
+			    -webkit-transform: scaleY(0.501);
+			    transform: scaleY(0.501);
+			}
+			.settlement_left {
+			    width: 50%;
+			    height: 50px;
+			    line-height: 20px;
+			    overflow: hidden;
+			    float: left;
+			    font-size: 12px;
+			    color: #9b9b9c;
+			    padding: 5px 0px;
+			}
+			.settlement_left .zongji {
+			    margin-left: 10px;
+			    font-size: 18px;
+			    color: #030000;
+			}
+			.settlement_left .money {
+			    font-size: 18px;
+			    color: #ff7800;
+			}
+			address, cite, dfn, em, var {
+			    font-style: normal;
+			}
+			.settlement_right {
+			    width: 50%;
+			    overflow: hidden;
+			    float: right;
+			}
+			.settlement_right a {
+			    text-align: center;
+			    width: 80%;
+			    height: 50px;
+			    line-height: 50px;
+			    font-size: 16px;
+			    float: right;
+			    border: 0px;
+			    border-radius: 0;
+			    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #feab47), color-stop(1, #ff5200));
+			    color: #FFF;
+			}
+			a {
+			    text-decoration: none;
+			    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+			    color: #646464;
+			}
+			
+			
+			
+			.main_con {
+			    width: 100%;
+			    overflow: hidden;
+			    margin-bottom: 50px;
+			}
+			.main_con_allchoose {
+			    width: 100%;
+			    height: 45px;
+			    line-height: 40px;
+			}
+			.circle {
+			    width: 20px;
+			    height: 20px;
+			    border: 1px solid #bab9b9;
+			    border-radius: 50%;
+			    display: block;
+			    float: left;
+			    margin: 12px;
+			}
+			a {
+			    text-decoration: none;
+			    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+			    color: #646464;
+			}
+			.main_con_allchoose img {
+			    width: 24px;
+			    height: 24px;
+			    float: right;
+			    margin: 8px 15px;
+			    display: none;
+			}
+			a img {
+			    border: 0;
+			}
+			ul, menu, dir {
+			    display: block;
+			    list-style-type: disc;
+			    -webkit-margin-before: 1em;
+			    -webkit-margin-after: 1em;
+			    -webkit-margin-start: 0px;
+			    -webkit-margin-end: 0px;
+			    -webkit-padding-start: 40px;
+			}
+			ul {
+			    list-style: none;
+			    padding: 0;
+			}
+			.main_con_goods ul li {
+			    margin-bottom: 10px;
+			}
+			.main_con_goods ul li {
+			    background: #f5f5f5;
+			    padding: 10px 0;
+			    position: relative;
+			    display: -webkit-box;
+			    display: -webkit-flex;
+			    display: flex;
+			    -webkit-box-align: center;
+			    -webkit-align-items: center;
+			    align-items: center;
+			    width: auto;
+			    text-align: left;
+			}
+			.aui-crl {
+			    position: relative;
+			    display: -webkit-box;
+			    display: -webkit-flex;
+			    display: flex;
+			    -webkit-box-align: center;
+			    -webkit-align-items: center;
+			    align-items: center;
+			}
+			.main_con_goods ul li .circle {
+			    float: left;
+			    margin: 42px 12px;
+			}
+			.circle {
+			    width: 20px;
+			    height: 20px;
+			    border: 1px solid #bab9b9;
+			    border-radius: 50%;
+			    display: block;
+			    float: left;
+			    margin: 12px;
+			}
+			.main_con_goods ul li img {
+			    width: 100px;
+			    height: 100px;
+			    float: left;
+			}
+			li {
+			    display: list-item;
+			    text-align: -webkit-match-parent;
+			}
+			.main_con_goods ul li div {
+			    float: right;
+			}
+			.main_con_goods ul li h2 {
+			    font-weight: normal;
+			    font-size: 14px;
+			    color: #666;
+			}
+			h2 {
+			    display: block;
+			    font-size: 1.5em;
+			    -webkit-margin-before: 0.83em;
+			    -webkit-margin-after: 0.83em;
+			    -webkit-margin-start: 0px;
+			    -webkit-margin-end: 0px;
+			    font-weight: bold;
+			}
+			.main_con_goods ul li .aui-o {
+			    color: #999;
+			    font-size: 12px;
+			}
+			p{
+			    display: block;
+			    -webkit-margin-before: 1em;
+			    -webkit-margin-after: 1em;
+			    -webkit-margin-start: 0px;
+			    -webkit-margin-end: 0px;
+			}
+			.main_con_goods ul li div .money {
+			    margin-top: 10px;
+			}
+			.aui-redd {
+			    color: #ff8746;
+			}
+			.main_con_goods ul li img {
+			    width: 100px;
+			    height: 100px;
+			    float: left;
+			}
+			.main_con_goods ul li div .money .add {
+			    background-image: url(../images/car/add.png);
+			    background-size: 18px;
+			    width: 30px;
+			    height: 20px;
+			    background-repeat: no-repeat;
+			    position: relative;
+			    z-index: 1;
+			    border: none;
+			    border-radius: 0;
+			}
+			.main_con_goods ul li div .money .num {
+			    position: relative;
+			    z-index: 1;
+			    border: none;
+			    border-radius: 0;
+			    font-size: 18px;
+			    font-weight: normal;
+			}
+            .main_con_goods ul li div .money .del {
+			    background-image: url(../images/car/jian.png);
+			    background-size: 18px;
+			    width: 30px;
+			    height: 20px;
+			    background-repeat: no-repeat;
+			    position: relative;
+			    z-index: 1;
+			    border: none;
+			    border-radius: 0;
+			}
+			.main_con_goods ul li div .money input {
+			    width: 50px;
+			    height: 20px;
+			    text-align: center;
+			    display: inline-block;
+			    float: right;
+			    margin: 0px;
+			    padding: 0px;
+			    font-size: 24px;
+			    color: #888;
+			    border: none;
+			    border-radius: 0;
+			    font-weight: normal;
+			}
+			input {
+			    -webkit-appearance: textfield;
+			    background: none;
+			    -webkit-rtl-ordering: logical;
+			    user-select: text;
+			    cursor: auto;
+			    padding: 0;
+			    border: 0;
+			    font-size: 15px;
+			    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+			}
+			input, button, select, textarea {
+			    outline: none;
+			}
+			
+			.selected{
+				background-color: rgba(255, 0, 0, 1);
+			}
+   </style>
+</head>
+<body>
+	<div class="header">
+			<div class="header-background"></div>
+			<div class="toolbar statusbar-padding">
+				<button class="bar-button back-button" onclick="history.go(-1);" dwz-event-on-click="click">
+					<i class="icon icon-back"></i>
+				</button>
+				<!--<a class="bar-button" data-href="home.html?dwz_callback=home_render" target="navTab" rel="home"><i class="icon icon-back"></i></a>-->
+				<div class="header-title">
+					<div class="title">购物车</div>
+				</div>
+			</div>
+	</div>
+	<div style="height:44px"></div>
+	<div class="main_con">
+			<div class="main_con_allchoose" id="allSelect">
+				<span class="circle" style="border: 1px solid rgb(186, 185, 185);"></span>
+				全选 
+				<a href="javascript:del_goods()">
+					<img src="../images/car/delete-icon.png" style="display: none;">
+				</a>
+			</div>
+			<div class="main_con_goods">
+				<ul id="carList">
+			        <!--<li>
+						<section class="aui-crl">
+							<span class="circle" style="border: 1px solid rgb(186, 185, 185);" onclick="changeSelect(this,1,60);"></span>
+							<img src="../images/b4.jpg">
+						</section>
+						<div style="width: 170px; padding-left: 10px;">
+							<h2>2017春装新款时尚女装宽松贴布开衫针织衫NG5836</h2>
+							<p class="aui-o">颜色分类:黑色,尺码:M</p>
+							<p class="money">
+								<em class="aui-redd singlePri">60</em>
+								<em class="aui-redd">￥</em>
+								<input class="add" type="button" value="" onclick="add(this,60,1);">
+								<input class="num" type="text" value="1">
+								<input class="del" type="button" value="" onclick="del(this,60,1);">
+							</p>
+						</div>
+					</li>-->
+				</ul>
+			</div>
+		</div>
+	    <div class="settlement t-line">
+			<div class="settlement_left"><em class="zongji">总计：</em><em class="money">￥</em><em class="money" id="allMoney">0</em><br>&nbsp;（共计<span id="shopNumber">0</span>件商品）</div>
+			<div class="settlement_right">
+				<a href="/confirm">去结算</a>
+			</div>
+		</div>
+</body>
+<script type="text/javascript">
+	var adminUrl = '<%- fontApiUrl %>';
+	var token = '<%- jwttoken %>';
+	var carObject = [];
+	var carObjectItem = {};
+	function add(obj,singlePrice,index) {
+        var value = parseInt($(obj).next().val())+1;
+        var str = $('#carList li').eq(index).find('.aui-crl span').attr('class');
+		if(str.indexOf('selected') === -1){
+		}else{
+    		getAddAllShopNumber(1,value,singlePrice,false);
+		}
+        $(obj).next().val(value)
+	};
+	function del(obj,singlePrice,index) {
+        var value = parseInt($(obj).prev().val())-1;
+        if(value=== -1){
+            return false        	
+        }else{
+        	var str = $('#carList li').eq(index).find('.aui-crl span').attr('class');
+			if(str.indexOf('selected') === -1){
+			}else{
+	        	getDelAllShopNumber(1,value,singlePrice,false)
+			};
+	        $(obj).prev().val(value);
+        }
+	};
+	function getCarList(token) {
+		$.ajax({
+			type:"get",
+			headers:{
+    			 "x-authorization": "Bearer "+token
+    		},
+			url:adminUrl+"/shopCart/list",
+			async:true,
+			success:function(response){
+				console.log(response);
+				var content = response.data;
+				var str = '';
+				for(var i=0;i<content.length;i++){
+					var desc=content[i].desc;
+					var	imgUrl=content[i].imgUrl;
+					var	name=content[i].name;
+					var	nowPrice=content[i].nowPrice;
+					var	number=content[i].number;
+					var	productId=content[i].productId;
+					str += '<li>'
+								+'<section class="aui-crl">'
+									+'<span class="circle" style="border: 1px solid rgb(186, 185, 185);" onclick="changeSelect(this,'+i+','+nowPrice+');"></span>'
+									+'<img src="'+imgUrl+'">'
+								+'</section>'
+								+'<div style="width: 170px; padding-left: 10px;">'
+									+'<h2>'+desc+'</h2>'
+									+'<p class="aui-o">颜色分类:黑色,尺码:M</p>'
+									+'<p class="money">'
+										+'<em class="aui-redd singlePri">'+nowPrice+'</em>'
+										+'<em class="aui-redd">￥</em>'
+										+'<input class="add" type="button" value="" onclick="add(this,'+nowPrice+','+i+');">'
+										+'<input class="num" type="text" value="'+number+'">'
+										+'<input class="del" type="button" value="" onclick="del(this,'+nowPrice+','+i+');">'
+									+'</p>'
+								+'</div>'
+							+'</li>';
+				}
+				$('#carList').html(str);
+			}
+		});
+	};
+	function selectAddAllMoney(allPrice){
+		var oldValue = parseInt($('#allMoney').text());
+	    $('#allMoney').text(oldValue+allPrice)
+	};
+	function selectDelAllMoney(allPrice){
+		var oldValue = parseInt($('#allMoney').text());
+	    $('#allMoney').text(oldValue-allPrice)
+	};
+	function getAddAllMoney(singlePrice){
+		var oldValue = parseInt($('#allMoney').text());
+	    $('#allMoney').text(oldValue+singlePrice)
+	};
+	function getDelAllMoney(singlePrice){
+		var oldValue = parseInt($('#allMoney').text());
+	    $('#allMoney').text(oldValue-singlePrice)
+	};
+	
+	
+	function getAddAllShopNumber(addValue,value,singlePrice,fromSelect){
+		var oldValue = parseInt($('#shopNumber').text());
+	    var allPrice = value*singlePrice;
+		if(fromSelect){
+			$('#shopNumber').text(oldValue+value);
+			selectAddAllMoney(allPrice)
+		}else{
+			$('#shopNumber').text(oldValue+addValue);
+			getAddAllMoney(singlePrice)
+		};
+	};
+	function getDelAllShopNumber(delValue,value,singlePrice,fromSelect){
+		var oldValue = parseInt($('#shopNumber').text());
+	    var allPrice = value*singlePrice;
+	    if(fromSelect){
+	    	$('#shopNumber').text(oldValue-value);
+			selectDelAllMoney(allPrice)
+		}else{
+			$('#shopNumber').text(oldValue-delValue);
+			getDelAllMoney(singlePrice)
+		};
+	};
+	
+	
+	function changeSelect(obj,index,singlePrice){
+		var str = $(obj).attr('class');
+		if(str.indexOf('selected') === -1){
+			$(obj).addClass('selected');
+			var value = parseInt($('#carList li').eq(index).find('.num').val());
+			getAddAllShopNumber(0,value,singlePrice,true);
+		}else{
+			$(obj).removeClass('selected');
+			var value = parseInt($('#carList li').eq(index).find('.num').val());
+			getDelAllShopNumber(0,value,singlePrice,true)
+		}
+	};
+	
+	$(function(){
+		getCarList(token);
+		$('#allSelect').click(function(){
+			var str = $(this).find('span').attr('class');
+			var length = $('#carList li').length;
+			var oldValue = parseInt($('#shopNumber').text());
+			var allPrice=0;
+		    var allShopNumber = 0;
+			if(str.indexOf('selected') === -1){
+				for(var i=0;i<length;i++){
+					var childrenLi = $('#carList li')[i];
+	                var ShopNumber = parseInt($(childrenLi).find('.num').val());		
+	                var shopSinglePri = parseInt($(childrenLi).find('.singlePri').text());
+	                var childrenStr = $(childrenLi).find('.aui-crl span').attr('class');
+	                if(childrenStr.indexOf('selected') === -1){
+		                allPrice += ShopNumber*shopSinglePri;
+		                allShopNumber += ShopNumber;
+					}else{
+					};
+				};
+				$('#shopNumber').text(oldValue+allShopNumber);
+				$('.circle').addClass('selected');
+				selectAddAllMoney(allPrice);
+			}else{
+				for(var i=0;i<length;i++){
+					var childrenLi = $('#carList li')[i];
+	                var ShopNumber = parseInt($(childrenLi).find('.num').val());		
+	                var shopSinglePri = parseInt($(childrenLi).find('.singlePri').text());
+	                var childrenStr = $(childrenLi).find('.aui-crl span').attr('class');
+	                if(childrenStr.indexOf('selected') === -1){
+					}else{
+		                allPrice += ShopNumber*shopSinglePri;
+		                allShopNumber += ShopNumber;
+					};
+				};
+				$('#shopNumber').text(oldValue-allShopNumber);
+				$('.circle').removeClass('selected');
+				selectDelAllMoney(allPrice);
+			}
+		});
+	})
+</script>
+</html>

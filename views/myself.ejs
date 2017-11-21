@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+   <meta charset="utf-8">
+   <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+   <meta content="yes" name="apple-mobile-web-app-capable">
+   <meta content="black" name="apple-mobile-web-app-status-bar-style">
+   <meta content="telephone=no" name="format-detection">
+   <meta content="email=no" name="format-detection">
+   <title>品纯酒社商城</title>
+   <link rel="stylesheet" type="text/css" href="../css/aui.css"/>
+   <link rel="stylesheet" type="text/css" href="../css/public.css"/>
+   <link rel="stylesheet" type="text/css" href="../css/myself.css"/>
+   <script src="../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+   <script src="../js/public.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+	<div class="aui-container" style="height: 100%;">
+		<div class="aui-page">
+			<div class="my-info">
+				<div class="my-info-background"></div>
+				<img class="my-avatar" src="../images/myself/my-photo1.jpg">
+				<span class="name"><a href="/login" style="color:#fff">用户姓名</a></span>
+				<!--<span class="my-vip" style="background:none">积分:5190&nbsp;&nbsp;</span>-->
+			</div>
+			<div class="aui-list-cells">
+				<!--<a href="wallet.html" class="aui-list-cell">
+					<div class="aui-list-cell-fl"><img src="../images/myself/me-4.png"></div>
+					<div class="aui-list-cell-cn">我的钱包</div>
+					<div class="aui-list-cell-fr">
+						3999 
+						<i class="aui-iconfont aui-icon-right"></i>
+					</div>
+				</a>-->
+				<!--<a href="collect.html" class="aui-list-cell">
+					<div class="aui-list-cell-fl"><img src="../images/myself/me-13.png"></div>
+					<div class="aui-list-cell-cn">我的收藏</div>
+					<div class="aui-list-cell-fr">
+						<i class="aui-iconfont aui-icon-right"></i>
+					</div>
+				</a>-->
+				<a href="/drink/addAddress" class="aui-list-cell">
+					<div class="aui-list-cell-fl"><img src="../images/myself/me-6.png"></div>
+					<div class="aui-list-cell-cn">添加收货地址</div>
+					<div class="aui-list-cell-fr">
+						<i class="aui-iconfont aui-icon-right"></i>
+					</div>
+				</a>
+				<a href="footprint.html" class="aui-list-cell">
+					<div class="aui-list-cell-fl"><img src="../images/myself/me-5.png"></div>
+					<div class="aui-list-cell-cn">最近购买订单</div>
+					<div class="aui-list-cell-fr">4<i class="aui-iconfont aui-icon-right"></i></div>
+				</a>
+				<!--<div class="devider b-line"></div>
+				<a href="bank.html" class="aui-list-cell">
+					<div class="aui-list-cell-fl"><img src="../images/myself/me-7.png"></div>
+					<div class="aui-list-cell-cn">我的银行</div>
+					<div class="aui-list-cell-fr"><i class="aui-iconfont aui-icon-right"></i></div>
+				</a>
+				<a href="/evaluate" class="aui-list-cell">
+					<div class="aui-list-cell-fl"><img src="../images/myself/me-9.png"></div>
+					<div class="aui-list-cell-cn">我的评价</div>
+					<div class="aui-list-cell-fr"><i class="aui-iconfont aui-icon-right"></i></div>
+				</a>
+				<div class="devider b-line"></div>
+				<a href="/login" class="aui-list-cell">
+					<div class="aui-list-cell-fl"><img src="../images/myself/me-11.png"></div>
+					<div class="aui-list-cell-cn">退出账号</div>
+					<div class="aui-list-cell-fr"><i class="aui-iconfont aui-icon-right"></i></div>
+				</a>-->
+			</div>
+			<div id="footerHeight">	</div>
+		</div>
+	</div>
+    <footer class="aui-bar aui-bar-tab" id="footer">
+	    <div class="aui-bar-tab-item" tapmode>
+	        	<a href="/drink">
+			        <i class="aui-iconfont aui-icon-home"></i>
+			        <div class="aui-bar-tab-label">
+			        		首页
+			        </div>
+	        	</a>
+	    </div>
+	    <div class="aui-bar-tab-item" tapmode>
+        	<a href="/drink/address">
+		        <i class="aui-iconfont aui-icon-star"></i>
+		        <div class="aui-bar-tab-label">
+		        	地址
+		        </div>
+        	</a>
+	    </div>
+	    <div class="aui-bar-tab-item" tapmode>
+	        	<a href="/drink/car">
+			        <div class="aui-badge">0</div>
+			        <i class="aui-iconfont aui-icon-cart"></i>
+			        <div class="aui-bar-tab-label">
+			        		购物车
+			        </div>
+	        	</a>
+	    </div>
+	    <div class="aui-bar-tab-item aui-active" tapmode>
+	        	<a href="/drink/myself">
+			        <div class="aui-dot"></div>
+			        <i class="aui-iconfont aui-icon-my"></i>
+			        <div class="aui-bar-tab-label">
+			        		我的
+			        </div>
+	        	</a>
+	    </div>
+	</footer>
+</body>
+<script type="text/javascript">
+	var  adminUrl = '<%- fontApiUrl %>';
+	var token = '<%- jwttoken %>';
+	//获取用户信息
+	 function getUserInfo(token){
+	    	$.ajax({
+	    		type:"get",
+	    		url:adminUrl+"/user/get",
+	    		headers:{
+	    			 "x-authorization": "Bearer "+token
+	    		},
+	    		async:true,
+	    		success:function(response) {
+//	    			console.log(response)
+	    			var name = response.data.nickName;
+	    			$('.name').html(name);
+	    		}
+	    	});
+	};
+	//获取订单列表
+	function getOrderList(token){
+		$.ajax({
+	    		type:"get",
+	    		url:adminUrl+"/order/list",
+	    		headers:{
+	    			 "x-authorization": "Bearer "+token
+	    		},
+	    		async:true,
+	    		success:function(response) {
+	    			console.log(response)
+	    		}
+	    });
+	};
+    $(function(){
+    	getUserInfo(token);
+    	getOrderList(token);
+    });
+</script>
+</html>

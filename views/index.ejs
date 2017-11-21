@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+   <meta charset="utf-8">
+   <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+   <meta content="yes" name="apple-mobile-web-app-capable">
+   <meta content="black" name="apple-mobile-web-app-status-bar-style">
+   <meta content="telephone=no" name="format-detection">
+   <meta content="email=no" name="format-detection">
+   <title>品纯酒社商城</title>
+   <link rel="stylesheet" type="text/css" href="../css/jquery.shCircleLoader.css"/>
+   <link rel="stylesheet" type="text/css" href="../css/public.css"/>
+   <link rel="stylesheet" type="text/css" href="../css/aui.css"/>
+   <link rel="stylesheet" type="text/css" href="../css/aui-slide.css"/>
+   <!--<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>-->
+   <script src="../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+   <script src="../js/jquery.shCircleLoader-min.js" type="text/javascript" charset="utf-8"></script>
+   <script src="../js/aui-slide.js" type="text/javascript" charset="utf-8"></script>
+   <script src="../js/public.js" type="text/javascript" charset="utf-8"></script>
+   <!--<script src="../js/api.js" type="text/javascript" charset="utf-8"></script>-->
+   <!--<script type="text/javascript">
+    var url1 ='https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx6aef1915818229a5&redirect_uri=http%3A%2F%2Fwww.dsunyun.com&response_type=code&scope=snsapi_userinfo&#wechat_redirect';
+    if(window.location.href==='http://www.dsunyun.com'){
+		    var useragent = navigator.userAgent;
+		    if (useragent.match(/MicroMessenger/i) != 'MicroMessenger') {
+		        var opened = window.open(url1, '_self');
+		        opened.opener = null;
+		    }else{
+		         window.open(url1, '_self');
+		    }
+    }                
+   </script>-->
+   <style type="text/css">
+   	.aui-card-list-header{
+   		font-size: 0.5rem;
+   	}
+   </style>
+</head>
+<body>
+	<div class="aui-container" style="height: 100%;">
+		<div class="aui-page">
+					<section class="aui-content">
+					    <div id="aui-slide3">
+						    <div class="aui-slide-wrap" >
+						        <!--<div class="aui-slide-node bg-dark">
+						            <a href="/drink/shopCar">
+						            	<img src="../images/b4.jpg" />
+						            </a>
+						        </div>-->
+						        <!--<div class="aui-slide-node bg-dark">
+						            <img src="../images/b4.jpg" />
+						        </div>
+						        <div class="aui-slide-node bg-dark">
+						            <img src="../images/b4.jpg" />
+						        </div>-->
+						    </div>
+						    <div class="aui-slide-page-wrap"><!--分页容器--></div>
+						</div>
+				        <!--<div class="aui-card-list-header">
+				                      以上是推荐商品
+				        </div>-->
+					    <div class="aui-card-list">
+					    	<!--<iframe id="thisIframe" style="border: none;" src="" width="100%" height="300px"></iframe>-->
+					                	    <!--<div class="aui-card-list-header">
+									                    卡片布局头部区域
+									        </div>
+									        <div class="aui-card-list-content">
+									            <img src="../images/b4.jpg" />
+									        </div>
+									        <div class="aui-card-list-footer">
+									            2016年7月12日
+									        </div>-->
+					                    <!--<div class="aui-card-list-header">
+									                    卡片布局头部区域
+									        </div>
+									        <div class="aui-card-list-content">
+									            <img src="../images/b4.jpg" />
+									        </div>
+									        <div class="aui-card-list-footer">
+									            2016年7月12日
+									        </div>-->
+					                   
+					                <!--<div class="aui-col-xs-4">
+					                </div>
+					                <div class="aui-col-xs-4">	
+					                </div>
+					                <div class="aui-col-xs-4">
+					                </div>-->
+					        <!--<div class="aui-card-list-content-padded aui-border-b aui-border-t">
+					            <div class="aui-row aui-row-padded">
+					            </div>
+					        </div>-->
+					        <!--<div class="aui-card-list-footer">
+					            <div><i class="aui-iconfont aui-icon-star"></i></div>
+					            <div><i class="aui-iconfont aui-icon-laud"></i></div>
+					            <div><i class="aui-iconfont aui-icon-note"></i></div>
+					        </div>-->
+					    </div>
+					    </div>
+				        <!--<div class="aui-card-list-footer aui-text-center">
+				                         查看更多
+				        </div>-->
+				        <div id="loader"></div>
+					</section>
+			<div id="footerHeight"></div>
+		</div>
+	</div>
+    <footer class="aui-bar aui-bar-tab" id="footer">
+	    <div class="aui-bar-tab-item aui-active" tapmode>
+        	<a href="/drink">
+		        <i class="aui-iconfont aui-icon-home"></i>
+		        <div class="aui-bar-tab-label">
+		        		首页
+		        </div>
+        	</a>
+	    </div>
+	    <div class="aui-bar-tab-item" tapmode>
+	        	<a href="/drink/address">
+			        <i class="aui-iconfont aui-icon-star"></i>
+			        <div class="aui-bar-tab-label">
+			        		地址
+			        </div>
+	        	</a>
+	    </div>
+	    <div class="aui-bar-tab-item" tapmode>
+	        	<a href="/drink/car">
+			        <div class="aui-badge">2</div>
+			        <i class="aui-iconfont aui-icon-cart"></i>
+			        <div class="aui-bar-tab-label">
+			        		购物车
+			        </div>
+	        	</a>
+	    </div>
+	    <div class="aui-bar-tab-item" tapmode>
+	        <div class="aui-dot"></div>
+	        <i class="aui-iconfont aui-icon-my"></i>
+	        <div class="aui-bar-tab-label">
+	        	<a href="/drink/myself">
+	        		我的
+	        	</a>
+	        </div>
+	    </div>
+	</footer>
+</body>
+<script type="text/javascript">
+	var token = '<%- jwttoken %>';
+	var adminUrl = '<%- fontApiUrl %>';
+    $('#loader').shCircleLoader();
+   
+   //获取首页轮播图商品
+   function getFirstPageSlideGoods(token){
+   	    $.ajax({
+    		type:"get",
+    		url:adminUrl+"/product/cyclic",
+    		headers:{
+    			 "x-authorization": "Bearer "+token
+    		},
+    		async:true,
+    		success:function(response) {
+//  			console.log(response)
+    			var content = response.data;
+    			var str = '';
+    			for(var i=0;i<content.length;i++){
+	    			var	code=content[i].code;
+					var	description=content[i].description;
+					var	detailsImages=content[i].detailsImages;//Array(3);
+					var	id=content[i].id;
+					var	introduce=content[i].introduce;
+					var	majorImages=content[i].majorImages;//Array(2);
+					var	name=content[i].name;
+					var	news=content[i].new;
+					var	nowPrice=content[i].nowPrice;
+					var	price=content[i].price;
+					var	recommend=content[i].recommend;
+					var	saleCount=content[i].saleCount;
+					var	searchKey=content[i].searchKey;
+					var	status=content[i].status;
+					var	stock=content[i].stock;
+					var	title=content[i].title;
+					
+					str += '<div class="aui-slide-node bg-dark">'
+				            +'<a href="/drink/shopCar?code='+code+'">'
+				            	+'<img src="'+detailsImages[0].imageUrl+'" />'
+				            +'</a>'
+				        +'</div>';
+    			};
+    			$('#aui-slide3 .aui-slide-wrap').html(str);
+    			var slide3 = new auiSlide({
+			        container:document.getElementById("aui-slide3"),
+			        // "width":300,
+			        "height":460,
+			        "speed":2000,
+			        "autoPlay": 10000, //自动播放
+			        "loop":true,
+			        "pageShow":true,
+			        "pageStyle":'dot',
+			        'dotPosition':'center'
+			   });
+			   $('#loader').hide();
+    		}
+    	});
+   };
+   //获取首页商品列表
+   function getFirstPageGoodsList(token){
+   	    $.ajax({
+    		type:"get",
+    		url:adminUrl+"/product/list",
+    		headers:{
+    			 "x-authorization": "Bearer "+token
+    		},
+    		async:true,
+    		data:{
+    			recommend:false
+    		},
+    		success:function(response) {
+//  			console.log(response)
+    			var content = response.data.content;
+    			var str = '';
+    			for(var i=0;i<content.length;i++){
+	    			var	code=content[i].code;
+					var	description=content[i].description;
+					var	detailsImages=content[i].detailsImages;//Array(3);
+					var	id=content[i].id;
+					var	introduce=content[i].introduce;
+					var	majorImages=content[i].majorImages;//Array(2);
+					var	name=content[i].name;
+					var	news=content[i].new;
+					var	nowPrice=content[i].nowPrice;
+					var	price=content[i].price;
+					var	recommend=content[i].recommend;
+					var	saleCount=content[i].saleCount;
+					var	searchKey=content[i].searchKey;
+					var	status=content[i].status;
+					var	stock=content[i].stock;
+					var	title=content[i].title;
+					if(majorImages===null){
+						majorImages = [{
+							imageUrl:"http://www.yeeed.com/wp-content/uploads/2014/07/BaiTu-8.jpg"
+						}];
+					};
+					str += '<div class="aui-col-xs-4"><div class="aui-card-list-header">'
+					                    +name
+					        +'</div>'
+					        +'<div class="aui-card-list-content">'
+					            +'<a href="/drink/shopCar?code='+code+'">'
+					            	+'<img src="'+majorImages[0].imageUrl+'" />'
+					            +'</a>'
+					        +'</div>'
+					        +'<div class="aui-card-list-footer">'
+					           +introduce
+					        +'</div></div>';
+    			};
+    			$('.aui-card-list').html(str);
+    			$('#loader').hide();
+                
+    		}
+    	});
+   };
+    
+   $(function(){
+   	   getFirstPageSlideGoods(token);
+// 	   getFirstPageGoodsList(token);
+//     var ifrWindow = document.getElementById('thisIframe').contentWindow;
+       $("#thisIframe").contents().find("img").click(function(){
+       	  console.log(1)
+       })
+   })
+</script>
+</html>

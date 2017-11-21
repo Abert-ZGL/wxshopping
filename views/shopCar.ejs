@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+   <meta charset="utf-8">
+   <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+   <meta content="yes" name="apple-mobile-web-app-capable">
+   <meta content="black" name="apple-mobile-web-app-status-bar-style">
+   <meta content="telephone=no" name="format-detection">
+   <meta content="email=no" name="format-detection">
+   <title>品纯酒社商城</title>
+   <link rel="stylesheet" type="text/css" href="../css/public.css"/>
+   <link rel="stylesheet" type="text/css" href="../css/aui.css"/>
+   <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+   <script src="../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+   <script src="../js/public.js" type="text/javascript" charset="utf-8"></script>
+   <style type="text/css">
+   	#shopName{
+   		text-align: center;
+   		color: black;
+   		font-weight: bold;
+   		background: rgba(0,0,0,0.2);
+   		position: absolute;
+   		z-index: 10;
+   		width: 100%;
+   		height: 44px;
+   		line-height: 44px;
+   	}
+   </style>
+</head>
+<body>
+	<div class="aui-container" style="height: 100%;">
+		<div class="aui-page">
+			<!--<div id="shopName">
+				<div class="aui-row">
+		          <div class="aui-col-xs-3" style="text-align: left;padding-left: 20px;">
+		          	  <a href="#" onclick="javascript:history.go(-1);"><i class="aui-iconfont aui-icon-left"></i></a>
+		          </div>
+		          <div class="aui-col-xs-3"></div>
+		          <div class="aui-col-xs-3"></div>
+		          <div class="aui-col-xs-3"></div>
+		        </div>
+			</div>-->
+			<section class="aui-content">
+				<section class="aui-content-padded" style="margin: 0;">
+				    <div class="aui-card-list" style="margin: 0;">
+				        <!--<div class="aui-card-list-header">
+				            卡片布局头部区域
+				        </div>-->
+				        <div class="aui-card-list-content-padded" style="padding: 0;">
+				           <img id="thisdetailImage" style="height: 380px;" src="" />
+				        </div>
+				        <div class="aui-card-list-footer">
+				            <div class="productInfo">
+				            	<div class="">
+				            		<span class="name">烧酒</span><br />
+				            		<span class="desc">此酒只应天上有，人间哪的几回闻</span>
+				            	</div>
+				            	<div class="" style="color: #dd2727; font-size: 24px;">
+				            		￥100
+				            	</div>
+				            </div>   
+				        </div>
+				    </div>
+				    
+				    <div class="">
+				    	
+				    </div>
+				</section>
+			</section>
+			<div id="footerHeight"></div>
+		</div>
+	</div>
+    <footer class="aui-bar aui-bar-tab" id="footer">
+	    <section class="aui-grid">
+		    <div class="aui-row">
+		        <div class="aui-col-xs-2">
+		            <!--<i class="aui-iconfont aui-icon-home"></i>
+		            <div class="aui-grid-label">首页</div>-->
+		        </div>
+		        <div class="aui-col-xs-2">
+		            <!--<i class="aui-iconfont aui-icon-gear"></i>
+		            <div class="aui-grid-label">设置</div>-->
+		        </div>
+		        <div class="aui-col-xs-4" style="background: rgb(255,148,2);">
+		        	<div class="addToCar" style="color: white;">
+		        		加入购物车
+		        	</div>
+		        </div>
+		        <div class="aui-col-xs-4" style="background: rgb(255,80,0);">
+		        	<div class="nowBuy" style="color: white;">
+			        	立即购买
+		        	</div>
+		        </div>
+		    </div>
+		</section>
+	</footer>
+</body>
+
+<script src="../js/aui-dialog.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/aui-toast.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+        var adminFontUrl = '<%- fontApiUrl %>';
+        var code = '<%- code %>';
+        var adminBackUrl = '<%- backApiUrl %>';
+        var token = '<%- jwttoken %>';
+		var dialog = new auiDialog({});
+		var toast = new auiToast({});
+		function getWxJssdkConfig(token){
+			var wxconfig={};
+			$.ajax({
+	    		type:"get",
+	    		headers:{
+	    			"x-authorization": "Bearer "+token,
+	    		},
+	    		url:"http://120.77.215.74:80/jssdk",
+	    		data:{
+					"url":"http://www.dsunyun.com:81/shopCar",
+					"debug":true
+				},
+	    		async:false,
+	    		success: function(response) {
+	    			wxconfig = response.data;
+	    		}
+	    	});
+	    	return wxconfig;
+		};
+		
+		//获取商品信息
+		function getProductInfoByCode(token) {
+        	$.ajax({
+        		type:"get",
+        		headers:{
+	    			 "x-authorization": "Bearer "+token
+	    		},
+        		url:adminBackUrl+"/product/get/basic/"+code,
+        		async:false,
+        		success:function(response) {
+//                  goodsObject = response.data;
+        			var name = response.data.name;
+        			var	description= response.data.description;
+					var	introduce= response.data.introduce;
+					var	nowPrice=response.data.nowPrice;
+					var	price= response.data.price;
+					var	searchKey= response.data.searchKey;
+					var	status= response.data.status;
+					var	stock= response.data.stock;
+					var	title= response.data.title;
+        		}
+        	});
+        };
+        
+        //通过code获取商品的图片
+        function getProductImgByCode(token) {
+        	$.ajax({
+        		type:"get",
+        		headers:{
+	    			 "x-authorization": "Bearer "+token
+	    		},
+        		url:adminBackUrl+"/product/get/pic/"+code,
+        		async:true,
+        		success:function(response) {
+        			$('#thisdetailImage').attr("src",response.data.detailImages[0].imageUrl);
+        			getProductInfoByCode(token)
+//      			console.log(response);
+        		}
+        	});
+        };
+		
+		
+		
+		//添加购物车
+	    $('.addToCar').click(function(){
+	    	dialog.alert({
+	                    title:"输入你要购买的数量",
+	                    msg:'<div id="numbers" style="color:red"><input type="number" value="1"/></div>',
+	                    buttons:['取消','确定']
+	                },function(ret){
+	                	var value = $('#numbers input').val();
+	                	 toast.custom({
+		                    title:"添加成功",
+		                    html:'<span>数量'+value+'件</span>',
+		                    duration:2000
+		                });
+	                    console.log($('#numbers input').val());
+	                })
+	    });
+	    
+	    //立即购买
+	    $('.nowBuy').click(function(){
+	    	$.ajax({
+	    		type:"post",
+	    		headers:{
+	    			"x-authorization": "Bearer "+token,
+	    			"Content-Type":"application/json"
+	    		},
+	    		url:adminFontUrl+"/order/create",
+	    		data:JSON.stringify({
+					"orderItemDtos":[
+						{
+							"productId":5,
+							"number":1,
+							"unitPrice":100
+						}	
+					],
+					"addressId":3,
+					"totalMoney":100,
+					"remark":"remark",
+					"isFromCart":false
+				}),
+	    		async:true,
+	    		success: function(response) {
+	    			var data = response.data;
+	    			var orderInfo = data.orderInfo;
+	    			var appid = orderInfo.appid;
+	    			var noncestr = orderInfo.noncestr;
+	    			var outTradeNo = orderInfo.outTradeNo;
+	    			var partnerid = orderInfo.partnerid;
+	    			var prepayid = orderInfo.prepayid;
+	    			var sign = orderInfo.sign;
+	    			var timestamp = orderInfo.timestamp;
+	    			var wxpackage = orderInfo.wxpackage;
+	    			var wxconfig = getWxJssdkConfig(token);
+//	    			console.log(wxconfig);
+	    			wx.config({
+					    debug: false, 
+					    appId: wxconfig.appId,
+					    timestamp: wxconfig.timestamp, 
+					    nonceStr: wxconfig.nonceStr, 
+					    signature: wxconfig.signature,
+					    jsApiList: ["checkJsApi","chooseWXPay","scanQRCode"]
+					});
+					wx.ready(function(){
+//						wx.chooseWXPay({
+//						    timestamp: timestamp,
+//						    nonceStr: noncestr, 
+//						    package: prepayid,
+//						    signType: 'MD5',
+//						    paySign: sign,
+//						    success: function (res) {
+//						    	console.log('chengogong')
+//						        console.log(res);
+//						    }
+//						});
+                        $('.productInfo').click(function(){
+	                        wx.scanQRCode({
+							    needResult: 0, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+							    scanType: ["qrCode","barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+							    success: function (res) {
+//							    	console.log(res)
+								    var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+								}
+							});
+                        })
+					});
+	    		}
+	    	});
+	    })
+        
+        
+        $(function(){
+        	getProductImgByCode(token);
+        })
+</script>
+</html>

@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+   <meta charset="utf-8">
+   <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+   <meta content="yes" name="apple-mobile-web-app-capable">
+   <meta content="black" name="apple-mobile-web-app-status-bar-style">
+   <meta content="telephone=no" name="format-detection">
+   <meta content="email=no" name="format-detection">
+   <title>品纯酒社商城</title>
+   <link rel="stylesheet" type="text/css" href="../css/jquery-confirm.css"/>
+   <link rel="stylesheet" type="text/css" href="../css/public.css"/>
+   <link rel="stylesheet" type="text/css" href="../css/aui.css"/>
+   <script src="../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+   <script src="../js/jquery-confirm.js" type="text/javascript" charset="utf-8"></script>
+   <script src="../js/public.js" type="text/javascript" charset="utf-8"></script>
+   <style type="text/css">
+   .header {
+   	position: fixed;
+   	top: 0;
+   	left: 0;
+   	z-index: 2;
+   	width: 100%;
+   }
+   
+   .header-background {
+   	background: #EFEFF4;
+   	position: absolute;
+   	top: 0;
+   	right: 0;
+   	bottom: 0;
+   	left: 0;
+   }
+   
+   .header-background:before {
+   	content: " ";
+   	position: absolute;
+   	left: 0;
+   	bottom: -0.03rem;
+   	right: 0;
+   	height: 1px;
+   	border-bottom: 1px solid rgba(177, 177, 177, 0.95);
+   	color: rgba(177, 177, 177, 0.95);
+   	-webkit-transform-origin: 0 100%;
+   	transform-origin: 0 100%;
+   	-webkit-transform: scaleY(0.501);
+   	transform: scaleY(0.501);
+   }
+   
+   *,
+   *:after,
+   *::before {
+   	-webkit-box-sizing: border-box;
+   	-moz-box-sizing: border-box;
+   	box-sizing: border-box;
+   }
+   
+   *,
+   *:before,
+   *:after {
+   	-webkit-box-sizing: border-box;
+   	box-sizing: border-box;
+   }
+   
+   .toolbar {
+   	display: -webkit-flex;
+   	display: flex;
+   	-webkit-flex-direction: row;
+   	flex-direction: row;
+   	-webkit-justify-content: space-between;
+   	justify-content: space-between;
+   	-webkit-align-items: center;
+   	align-items: center;
+   	-webkit-transform: translateZ(0);
+   	transform: translateZ(0);
+   	width: 100%;
+   	padding: 6px;
+   	min-height: 44px;
+   }
+   
+   .header .back-button {
+   	display: -webkit-box;
+   	display: -webkit-flex;
+   	display: flex;
+   	-webkit-box-align: center;
+   	-webkit-align-items: center;
+   	align-items: center;
+   	-webkit-justify-content: center;
+   	justify-content: center;
+   }
+   
+   .header .bar-button {
+   	display: -webkit-box;
+   	display: -webkit-flex;
+   	display: flex;
+   	-webkit-box-align: center;
+   	-webkit-align-items: center;
+   	align-items: center;
+   	-webkit-justify-content: center;
+   	justify-content: center;
+   	position: relative;
+   	z-index: 1;
+   	display: block;
+   	width: 56px;
+   	height: 32px;
+   	line-height: 32px;
+   	font-size: 17px;
+   	border: none;
+   	box-shadow: none;
+   	background: none;
+   }
+   
+   .header .header-title {
+   	display: -webkit-flex;
+   	display: flex;
+   	-webkit-flex: 1;
+   	flex: 1;
+   	order: 4;
+   	position: absolute;
+   	top: 0;
+   	left: 0;
+   	width: 100%;
+   	height: 44px;
+   	-webkit-align-items: center;
+   	align-items: center;
+   	padding: 0 80px;
+   	text-align: center;
+   	font-size: 17px;
+   	font-weight: 500;
+   	-webkit-transform: translateZ(0);
+   	transform: translateZ(0);
+   	color: #333333;
+   }
+   
+   .header .title {
+   	display: block;
+   	overflow: hidden;
+   	width: 100%;
+   	white-space: nowrap;
+   	text-overflow: ellipsis;
+   	font-weight: normal;
+   }
+   
+   .header .icon-back {
+   	margin: 0 20px 0 0;
+   	width: 32px;
+   	height: 32px;
+   	background-position: left center;
+   }
+   
+   .icon-back {
+   	background-image: url(../images/myself/rightArrow.png);
+   	margin: 0 20px 0 0;
+   	width: 25px;
+   	height: 25px;
+   	background-position: left center;
+   	background-size: 25px;
+   }
+   
+   .icon {
+   	display: block;
+   	margin: 0 auto;
+   	width: 25px;
+   	height: 25px;
+   	background-position: center center;
+   	background-repeat: no-repeat;
+   	-webkit-background-size: 32px;
+   	background-size: 32px;
+   }
+   
+   ul {
+   	list-style: none;
+   }
+   
+   li {
+   	display: list-item;
+   	text-align: -webkit-match-parent;
+   	background: white;
+   }
+   
+   a {
+   	text-decoration: none;
+   	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+   	color: #646464;
+   }
+   
+   .devider {
+   	display: -webkit-flex;
+   	display: flex;
+   	overflow: hidden;
+   	-webkit-align-items: center;
+   	align-items: center;
+   	-webkit-justify-content: space-between;
+   	justify-content: space-between;
+   	width: 100%;
+   	min-height: 10px;
+   	background: #f5f5f5;
+   }
+   
+   .aui-add-cell {
+   	padding: 1px 20px;
+   	position: relative;
+   	display: -webkit-box;
+   	display: -webkit-flex;
+   	display: flex;
+   	-webkit-box-align: center;
+   	-webkit-align-items: center;
+   	align-items: center;
+   	font-size: 14px;
+   	padding-top: 10px;
+   }
+   
+   .aui-add-fix {
+   	-webkit-box-flex: 1;
+   	-webkit-flex: 1;
+   	flex: 1;
+   }
+   
+   .aui-add-title {
+   	padding: 1px 20px;
+   	font-size: 14px;
+   	padding-bottom: 5px;
+   }
+   
+   .b-line {
+   	position: relative;
+   }
+   
+   .b-line:before {
+   	content: " ";
+   	position: absolute;
+   	left: 0;
+   	bottom: 0;
+   	right: 0;
+   	height: 1px;
+   	border-bottom: 1px solid rgba(207, 207, 207, 0.95);
+   	color: rgba(207, 207, 207, 0.95);
+   	-webkit-transform-origin: 0 100%;
+   	transform-origin: 0 100%;
+   	-webkit-transform: scaleY(0.501);
+   	transform: scaleY(0.501);
+   }
+   
+   .aui-add-cell {
+   	padding: 1px 20px;
+   	position: relative;
+   	display: -webkit-box;
+   	display: -webkit-flex;
+   	display: flex;
+   	-webkit-box-align: center;
+   	-webkit-align-items: center;
+   	align-items: center;
+   	font-size: 14px;
+   	padding-top: 10px;
+   }
+   
+   .aui-add-fix {
+   	-webkit-box-flex: 1;
+   	-webkit-flex: 1;
+   	flex: 1;
+   }
+   
+   .default{
+   	color:#ff5200;
+   }
+   </style>
+</head>
+<body>
+	<div class="header">
+			<div class="header-background"></div>
+			<div class="toolbar statusbar-padding">
+				<!--<button class="bar-button back-button" onclick="history.go(-1);" dwz-event-on-click="click">
+					<i class="icon icon-back"></i>
+				</button>-->
+				<div class="header-title">
+					<div class="title">管理收货地址</div>
+				</div>
+			</div>
+	</div>
+	<div style="height:44px"></div>
+	<div class="aui-container" style="height: 100%;">
+		<div class="aui-page">
+					<div>
+						<ul id="addressList">
+							<!--<li>
+								<div class="aui-add-cell"><span class="aui-add-fix">李明轩</span><span>18801066666</span></div>
+								<div class="b-line aui-add-title">北京市海淀区学院路51号学而国际大厦1层</div>
+								<div class="aui-add-cell">
+									<div class="aui-add-fix" style="color:#ff5200">默认地址</div>
+									<div>
+										<span><a href="/add">编辑</a></span>
+										<span valueCode="code">删除</span>
+									</div>
+								</div>
+							<div class="devider"></div>
+							</li>-->
+						</ul>
+					</div>
+			<div id="footerHeight">	</div>
+		</div>
+	</div>
+    <footer class="aui-bar aui-bar-tab" id="footer">
+	    <div class="aui-bar-tab-item" tapmode>
+	        	<a href="/drink">
+			        <i class="aui-iconfont aui-icon-home"></i>
+			        <div class="aui-bar-tab-label">
+			        		首页
+			        </div>
+	        	</a>
+	    </div>
+	    <div class="aui-bar-tab-item aui-active" tapmode>
+	        	<a href="/drink/address">
+			        <i class="aui-iconfont aui-icon-star"></i>
+			        <div class="aui-bar-tab-label">
+			        		地址
+			        </div>
+	        	</a>
+	    </div>
+	    <div class="aui-bar-tab-item" tapmode>
+	        	<a href="/drink/car">
+			        <div class="aui-badge">99</div>
+			        <i class="aui-iconfont aui-icon-cart"></i>
+			        <div class="aui-bar-tab-label">
+			        		购物车
+			        </div>
+	        	</a>
+	    </div>
+	    <div class="aui-bar-tab-item" tapmode>
+	        	<a href="/drink/myself">
+			        <div class="aui-dot"></div>
+			        <i class="aui-iconfont aui-icon-my"></i>
+			        <div class="aui-bar-tab-label">
+			        		我的
+			        </div>
+	        	</a>
+	    </div>
+	</footer>
+</body>
+<script type="text/javascript">
+	var  adminUrl = '<%- fontApiUrl %>';
+	var token = '<%- jwttoken %>';
+	//获取收货地址列表
+    function getAddressList(token){
+    	$.ajax({
+    		type:"get",
+    		url:adminUrl+"/address/list",
+    		headers:{
+    			 "x-authorization": "Bearer "+token
+    		},
+    		async:true,
+    		success:function(response) {
+    			console.log(response)
+    			var content = response.data;
+    			var length = content.length;
+    			var str = '';
+    			if(length===0){
+    				str==='你还没有添加过地址'
+    			}
+    			for(var i=0;i<length;i++){
+	    			var address=content[i].address;//"帝国大厦，帝城雅苑110房";
+					var	area=content[i].area;//"宝安区";
+					var	city=content[i].city;//"深圳市";
+					var	defaults=content[i].default;//true;
+					var	id=content[i].id;//1;
+					var	mobile=content[i].mobile;//"15012345678";
+					var	name=content[i].name;//"青筱";
+					var	pcaDetail=content[i].pcaDetail;//"广东省深圳市";
+					var	phone=content[i].phone;//"15012345678";
+					var	province=content[i].province;//"广东省";
+					var	zip=content[i].zip;//"421300";
+					if(defaults){
+						str +=  '<li>'
+								+'<div class="aui-add-cell"><span class="aui-add-fix">'+name+'</span><span>'+phone+'</span></div>'
+								+'<div class="b-line aui-add-title">'+pcaDetail+area+address+'</div>'
+								+'<div class="aui-add-cell">'
+									+'<div class="aui-add-fix default">默认地址</div>'
+									+'<div>'
+										+'<button class="btn btn-info"><a href="/drink/editAddress?id='+id+'">编辑</a></button>'
+										+'<button class="btn btn-info"  onclick="deleteAddressById('+id+')">删除</button>'
+									+'</div>'
+								+'</div>'
+							    +'<div class="devider"></div>'
+							+'</li>';
+					}else{
+						str +=  '<li>'
+								+'<div class="aui-add-cell"><span class="aui-add-fix">'+name+'</span><span>'+phone+'</span></div>'
+								+'<div class="b-line aui-add-title">'+pcaDetail+area+address+'</div>'
+								+'<div class="aui-add-cell">'
+									+'<div class="aui-add-fix"></div>'
+									+'<div>'
+										+'<button class="btn btn-info"><a href="/drink/editAddress?id='+id+'">编辑</a></button>'
+										+'<button class="btn btn-info"  onclick="deleteAddressById('+id+')">删除</button>'
+									+'</div>'
+								+'</div>'
+							    +'<div class="devider"></div>'
+							+'</li>';
+					}
+    			};
+    			$('#addressList').html(str);
+    		}
+    	});
+    };
+    
+    
+    //删除收货地址
+    function deleteAddressById(id){
+    	$.confirm({
+		    title: '地址操作',
+		    content: '你确定删除改地址',
+		    confirm: function(){
+		    	$.ajax({
+		    		type:"DELETE",
+		    		headers:{
+		    			 "x-authorization": "Bearer "+token
+		    		},
+		    		url:adminUrl+"/address/delete/"+id,
+		    		async:true,
+		    		success:function(res){
+		    			getAddressList(token);
+				        $.alert('删除地址成功!'+id);
+		    		},
+		    		error:function(){
+		    			$.alert('错误')
+		    		}
+		    	});
+		    },
+		    cancel: function(){
+		        $.alert('已经取消删除!')
+		    }
+		});
+    };
+    $(function(){
+    	getAddressList(token);
+    })
+</script>
+</html>

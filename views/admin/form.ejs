@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <title>后台管理</title>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+        <!-- Bootstrap -->
+        <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
+        <link rel="stylesheet" type="text/css" href="assets/zoomify.min.css"/>
+        <link href="assets/styles.css" rel="stylesheet" media="screen">
+        <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="vendors/flot/excanvas.min.js"></script><![endif]-->
+        <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <script src="vendors/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+        <style type="text/css">
+        	.control-group .controls{
+        		border: 1px solid gray;
+        	}
+        	#fileUploadForm{
+        		margin: 0;
+        		width: 100px;
+        		height: 50px;
+        		position: relative;
+        	}
+        	#fileUploadForm input{
+        		opacity: 0;
+        		position: absolute;
+        		z-index: 10;
+        		top: 0;
+        		left: 0;
+        		width: 100%;
+        	}
+        </style>
+    </head>
+    
+    <body>
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container-fluid">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span>
+                     <span class="icon-bar"></span>
+                     <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="#">后台管理</a>
+                    <div class="nav-collapse collapse">
+                        <ul class="nav pull-right">
+                            <li class="dropdown">
+                                <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"> 
+                                	<i class="icon-user"></i>管理员<i class="caret"></i>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a tabindex="-1" href="#">个人资料</a>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li>
+                                        <a tabindex="-1" href="/admin/login">退出</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <ul class="nav">
+                            <li class="active">
+                                <a href="#">首页</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--/.nav-collapse -->
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span2" id="sidebar">
+                    <ul class="nav nav-list bs-docs-sidenav nav-collapse collapse">
+                        <li class="active">
+                            <a href="/admin/index"><i class="icon-chevron-right"></i>商品库存</a>
+                        </li>
+                        <li>
+                            <a href="/admin/tables"><i class="icon-chevron-right"></i>成交订单</a>
+                        </li>
+                        <li>
+                            <a href="/admin/stats"><i class="icon-chevron-right"></i>促销活动</a>
+                        </li>
+                    </ul>
+                </div>
+                <!--/span-->
+                <div class="span10" id="content">
+                     <div class="row-fluid">
+                        <!-- block -->
+                        <div class="block">
+                            <div class="navbar navbar-inner block-header">
+                                <div class="muted pull-left">商品</div>
+                            </div>
+                            <div class="block-content collapse in">
+                                <div class="span6">
+                                    <form class="form-horizontal">
+                                      <fieldset>
+                                        <legend>商品详情</legend>
+                                        <div class="control-group">
+                                          <label class="control-label" for="typeahead">code:</label>
+                                          <input type="text"  value=<%=code %> />
+                                        </div>
+                                        <div class="control-group">
+                                          <label class="control-label" for="typeahead">名称:</label>
+                                         <input type="text" id="proName" value="" />
+                                        </div>
+                                        <div class="control-group">
+                                          <label class="control-label" for="typeahead">成本价:</label>
+                                          <input type="text" name="" id="proPrice" value="" />
+                                        </div>
+                                        <div class="control-group">
+                                          <label class="control-label" for="typeahead">优惠价:</label>
+                                          <input type="text" name="" id="proNowPrice" value="" />
+                                        </div>
+                                        <div class="control-group">
+                                          <label class="control-label" for="typeahead">剩余库存:</label>
+                                          <input type="number" name="" id="proStock" value="" />
+                                        </div>
+                                        <div class="control-group">
+                                          <label class="control-label" for="typeahead">主题:</label>
+                                          <input type="text" name="" id="proTitle" value="" />
+                                        </div>
+                                      </fieldset>
+                                    </form>
+                                </div>
+                                
+                                <div class="span6" style="margin-left: 0;">
+                                	<legend>商品图片</legend>
+                                	<div class="control-group">
+                                		<div class="example span6">
+												<p><img src="" class="img-rounded" alt=""></p>
+                                		</div>
+										<div class="span6">
+												<form method="POST" id="fileUploadForm">
+													<span class="btn btn-success fileinput-button">
+									                    <i class="glyphicon glyphicon-plus"></i>
+									                    <span>更换图片</span>
+														<input type="file" name="detailImageFiles" onchange="fire_ajax_submit(this)"/>
+									                </span>
+												</form>
+										</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="block-content collapse in">
+                            	    <div class="span6">
+                            	    	<div class="span6" style="text-align: center;">
+	                            	 	    <button id="submitshopInfo" type="button" class="btn btn-info btn-lg">确定</button>
+                            	    	</div>
+                            	 	    <div class="span6">
+                            	 	    	<a href="/admin/index">
+	                            	 	   	  <button type="button" class="btn btn-danger btn-lg">取消</button>
+	                            	 	   	</a>
+                            	 	    </div>
+                            	 	</div>
+                            </div>
+                        </div>
+                        <!-- /block -->
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <footer>
+                <p>&copy; 品纯酒社商城后台管理</p>
+            </footer>
+        </div>
+
+        <script src="vendors/jquery-1.9.1.js"></script>
+        <script src="assets/zoomify.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="bootstrap/js/bootstrap.min.js"></script>
+        <script src="assets/scripts.js"></script>
+        <script>
+        var code = '<%- code %>';
+        var adminUrl = '<%- backApiUrl %>';
+        var goodsObject = {};
+        function getProductInfoByCode(token) {
+        	$.ajax({
+        		type:"get",
+        		headers:{
+	    			 "x-authorization": "Bearer "+token
+	    		},
+        		url:adminUrl+"/product/get/basic/"+code,
+        		async:false,
+        		success:function(response) {
+//      			console.log(response);
+                    goodsObject = response.data;
+        			var name = response.data.name;
+        			var	description= response.data.description;
+					var	introduce= response.data.introduce;
+					var	nowPrice=response.data.nowPrice;
+					var	price= response.data.price;
+					var	searchKey= response.data.searchKey;
+					var	status= response.data.status;
+					var	stock= response.data.stock;
+					var	title= response.data.title;
+        			$('#proName').val(name);
+        			$('#proPrice').val(price);
+        			$('#proNowPrice').val(nowPrice);
+        			$('#proStock').val(stock);
+        			$('#proTitle').val(title);
+        		}
+        	});
+        };
+        
+        //通过code获取商品的图片
+        function getProductImgByCode(token) {
+        	$.ajax({
+        		type:"get",
+        		headers:{
+	    			 "x-authorization": "Bearer "+token
+	    		},
+        		url:adminUrl+"/product/get/pic/"+code,
+        		async:true,
+        		success:function(response) {
+//      			console.log(response);
+        			$('.example img').attr("src",response.data.detailImages[0].imageUrl);
+        			setTimeout(function(){
+        				$('.example img').zoomify();
+        			},1000)
+        		}
+        	});
+        };
+        
+        //更改商品的基本信息
+        function changeShopInfo(token){
+            var name = $('#proName').val();
+			var	description= goodsObject.description;
+			var	introduce= goodsObject.introduce;
+			var	price= $('#proPrice').val();
+			var	searchKey= goodsObject.searchKey;
+			var	stock= $('#proStock').val();
+			var	title= $('#proTitle').val();
+        	$.ajax({
+        		type:"post",
+        		headers:{
+	    			 "x-authorization": "Bearer "+token,
+	    			 "content-type": "application/json"
+	    		},
+        		url:adminUrl+"/product/set/basic",
+        		data:JSON.stringify({
+        			code: code,	
+					name: name,
+					title: title,
+					introduce: introduce,
+					description: description,
+					searchKey: searchKey,
+					price: price,
+					stock: stock
+        		}),
+        		async:true,
+        		success:function(response) {
+        			console.log(response);
+        			$.alert('商品信息更新成功')
+        			getProductInfoByCode(token);
+        		}
+        	});
+        };
+        //返回选择更换照片的对象
+        function fire_ajax_submit(file) {
+        	var reader = new FileReader();
+		    reader.readAsDataURL(file.files[0]);
+		    reader.onload = function(evt){
+//		    	console.log(evt.target.result)
+		      	$.ajax({
+		            type: "POST",
+		            enctype: 'multipart/form-data',
+		            url: adminUrl+"/product/set/pic/"+code,
+		            headers:{
+		    			 "x-authorization": "Bearer "+token
+		    		},
+		            data:evt.target.result,
+		            processData: false, 
+		            contentType: false,
+		            cache: false,
+		            success: function (data) {
+		            	var token = GetCookie('loginCookie');
+		            	getProductImgByCode(token);
+		            },
+		            error: function (e) {
+		            }
+	        	});
+		    };
+//	        var form = $('#fileUploadForm')[0];
+//	        var data = new FormData(form);
+	    };
+        //更改商品的图片
+        function changeShopImage(token,form){
+        	$.ajax({
+        		"crossDomain": true,
+        		url:adminUrl+"/product/set/pic/"+code,
+        		type:"post",
+        		async:true,
+        		headers:{
+	    			"x-authorization": "Bearer "+token
+	    		},
+    			"processData": false,
+    		    "contentType": false,
+    			enctype: 'multipart/form-data',
+        		data:form,
+        		success:function(response) {
+        			console.log(response);
+        		}
+        	});
+        };
+        
+        $(function() {
+        	var token = GetCookie('loginCookie');
+        	getProductInfoByCode(token);
+        	getProductImgByCode(token);
+            $('#submitshopInfo').click(function(){
+            	changeShopInfo(token);
+            })
+        });
+        </script>
+    </body>
+</html>
